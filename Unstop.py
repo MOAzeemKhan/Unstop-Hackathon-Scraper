@@ -35,8 +35,6 @@ apply_links = []
 # Iterate through the list of elements and extract the links
 for link in links:
     temp_link = link.get_attribute('href')
-    '''driver.get('https://unstop.com/hackathons?filters=,all,open,all&types=teamsize,payment,oppstatus,eligible')'''
-
     apply_links.append(temp_link)
 
 institutions = driver.find_elements(By.XPATH, './/h3[@class="double-wrap ng-star-inserted"]')
