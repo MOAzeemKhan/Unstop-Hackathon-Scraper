@@ -1,16 +1,3 @@
-'''from selenium import webdriver
-from time import sleep
-
-from selenium.webdriver.common.by import By
-
-path = 'C://chromedriver.exe'
-browser = webdriver.Chrome(executable_path=path)
-browser.get('https://unstop.com/hackathons?filters=,all,open,all&types=teamsize,payment,oppstatus,eligible')
-browser.maximize_window()
-
-tk = browser.find_element(By.CLASS_NAME("double-wrap ng-star-inserted"))
-
-sleep(5000)'''
 import csv
 import time
 
@@ -32,19 +19,6 @@ while True:
         break
     except:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-'''# Scroll down the page
-
-driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.END)
-
-# Wait for the page to load
-time.sleep(2)
-
-# Scroll up the page
-driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.HOME)
-
-# Wait for the page to load
-time.sleep(2)
-'''
 
 hackathon_list_element = driver.find_element(By.XPATH, '//app-opportunity-listbox[@class="ng-star-inserted"]')
 
