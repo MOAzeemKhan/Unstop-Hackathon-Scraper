@@ -43,7 +43,7 @@ with open('dates.csv', 'w', newline='') as csvfile:
 
 
 
-# Set the path to the chromedriver executable
+'''# Set the path to the chromedriver executable
 driver = webdriver.Chrome(executable_path='/path/to/chromedriver')
 
 # Open the website
@@ -62,7 +62,7 @@ competitions = []
 for element in elements:
   WebDriverWait(driver, 10)
   link = element.get_attribute('href')
-  '''driver.implicitly_wait(10)'''
+  driver.implicitly_wait(10)
   WebDriverWait(driver, 10)
   # Open the competition details page
   driver.get(link)
@@ -88,3 +88,19 @@ driver.quit()
 with open("competitions_deadline.csv", "w", newline="") as f:
   writer = csv.writer(f)
   writer.writerows(competitions)
+'''
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from scrapy.http import TextResponse
+
+path_driver = 'C://chromedriver.exe'
+driver = webdriver.Chrome(executable_path=path_driver)
+registration_deadlines = []
+apply_links = 'https://unstop.com/hackathon/hack-pnw-hackpnw-568205'
+driver.get(apply_links)
+response = TextResponse(driver.current_url, body=driver.page_source, encoding='utf-8')
+deadline = response.xpath('//div[@class="ng-star-inserted"]/strong/text()').extract_first()
+registration_deadlines.append(deadline)
+print(registration_deadlines)

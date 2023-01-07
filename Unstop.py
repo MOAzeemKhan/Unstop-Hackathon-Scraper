@@ -2,7 +2,40 @@ import csv
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from datetime import datetime, timedelta
+
+def date_extractor(date):
+    current_date = datetime.now()
+    strin = date
+    x = strin.split("left")
+    x = x[0]
+    if 'day' in x:
+      x = x.split("day")
+      x = x[0]
+      x = int(x)
+      final_date = current_date + timedelta(days=x)
+      return final_date.strftime("%d-%m-%Y")
+    elif 'days' in x:
+      x = x.split("days")
+      x = x[0]
+      x = int(x)
+      final_date = current_date + timedelta(days=x)
+      return final_date.strftime("%d-%m-%Y")
+    elif 'hours' in x:
+      x = x.split("hours")
+      x = x[0]
+      final_date = current_date + timedelta(hours=int(x))
+      return final_date.strftime("%d-%m-%Y")
+    else:
+      if 'months' in x:
+        x = x.split("months")
+      else:
+        x = x.split("month")
+      x = x[0]
+      x = int(x)
+      final_date = current_date + timedelta(days=x * 30)
+      return final_date.strftime("%d-%m-%Y")
+
 
 # All required info:
 url = 'https://unstop.com/hackathons?filters=,all,open,all&types=teamsize,payment,oppstatus,eligible'
@@ -18,7 +51,6 @@ driver = webdriver.Chrome(executable_path=path_driver)
 # open the website
 driver.get(url)
 driver.maximize_window()
-'''cookie = driver.find_element(By.XPATH, "//button[contains(text(), 'Ok, Continue']")'''
 while True:
     try:
         driver.find_element(By.XPATH, xpath_endpage)
@@ -47,40 +79,43 @@ institutions = driver.find_elements(By.XPATH, xpath_inst)
 
 # Create a list to store the institution names
 institution_names = [element.text for element in institutions]
-
-'''date = []
-date_elements = driver.find_elements(By.XPATH, "//div[@class='registered']")
-for i in range(len(hackathon_names)):
-  date_string = date_elements[i].text
-  last_date_to_apply = date_string.split(" ")[-1]
-  date.append(last_date_to_apply)
+registration_deadlines = []
 '''
-print(apply_links)
-print(hackathon_names)
-print(institution_names)
+apply_links = ['https://unstop.com/hackathon/hack-pnw-hackpnw-568205']
+for link in apply_links: #Working
+    driver.get(link)
+    response = TextResponse(driver.current_url, body=driver.page_source, encoding='utf-8')
+    deadline = response.xpath('//div[@class="ng-star-inserted"]/strong/text()').extract_first()
+    registration_deadlines.append(deadline)
+'''
+date = []
+time_left_elements = driver.find_elements(By.XPATH, './/strong[@class="ml-5"]')
+time_left = []
 
-competitions = [["Hackathons", "Institutions", "Links"]]
+for element in time_left_elements:
+    time_left.append(element.text)
+
+for i in range(1, len(time_left), 2):
+    temp = time_left[i]
+    print(temp)
+    new_date = date_extractor(temp)
+    date.append(new_date)
+
+print(len(apply_links), apply_links)
+print(len(hackathon_names), hackathon_names)
+print(institution_names)
+print(len(date), date)
+
+competitions = [["Hackathons", "Institutions", "Links", "Dates"]]
 for i in range(len(hackathon_names)):
-    competitions.append([hackathon_names[i], institution_names[i], apply_links[i]])
+    competitions.append([hackathon_names[i], institution_names[i], apply_links[i], date[i]])
 with open("competitions.csv", "w", newline="") as f:
   writer = csv.writer(f)
   writer.writerows(competitions)
 
-def scrape_date(apply_links):
-    date=[]
-    for i in range(len.(apply_links)):
-        temp_driver = webdriver.Chrome(executable_path="C://chromedriver.exe")
-        url = apply_links[i]
-        temp_driver.get(url)
-        temp_date = driver.find_element(By.XPATH, '//strong[@class="ng-tns-c147-1"]')
-        date.append(temp_date)
-    return date
+'''
 
-fun_date = scrape_date(apply_links)
-print(fun_date)
-
-
-'''date = []
+date = []
 
 for link in links:
     temp_link = link.get_attribute('href')
@@ -92,5 +127,3 @@ print(date)'''
 
 # close the browser
 driver.close()
-
-'''//div[@class="click_here mt-20 ng-star-inserted"]'''
