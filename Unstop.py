@@ -104,7 +104,7 @@ print(len(hackathon_names), hackathon_names)
 print(institution_names)
 print(date)
 
-competitions = [["Hackathons", "Institutions", "Links", "Dates"]]
+competitions = [["Hackathons", "Institutions", "Links", "Registration Deadline"]]
 for i in range(len(hackathon_names)):
     competitions.append([hackathon_names[i], institution_names[i], apply_links[i], date[i]])
 with open("competitions.csv", "w", newline="") as f:
