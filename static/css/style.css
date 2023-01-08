@@ -1,4 +1,4 @@
-* {
+{
   box-sizing: border-box;
 }
 
@@ -8,10 +8,19 @@ body {
 }
 
 header {
-  background-color: #333;
+  background-color: #ff0000;
   color: white;
   padding: 30px;
   text-align: center;
+  animation: header-fade-in 0.5s ease-in-out;
+}
+@keyframes header-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 header h1 {
@@ -19,7 +28,27 @@ header h1 {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+/* Add a fade-in effect to the images when they are loaded */
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 
+  max-width: 100%;
+  height: auto;
+  animation: fade-in 0.5s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 nav {
   background-color: #333;
   color: white;
@@ -27,8 +56,16 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
+  animation: nav-slide-in 0.5s ease-in-out;
 }
-
+@keyframes nav-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
 nav ul {
   display: flex;
   list-style: none;
@@ -117,3 +154,6 @@ footer {
   padding: 20px;
   text-align: center;
 }
+
+
+
