@@ -93,17 +93,11 @@ for element in time_left_elements:
 count_date = 0
 for i in range(1, len(time_left), 2):
     temp = time_left[i]
-    print(temp)
     new_date = date_extractor(temp)
     date.append(new_date)
     'count_date += 1'
 
 date.append('Not Found')
-print(len(apply_links), apply_links)
-print(len(hackathon_names), hackathon_names)
-print(institution_names)
-print(date)
-
 competitions = [["Hackathons", "Institutions", "Links", "Registration Deadline"]]
 for i in range(len(hackathon_names)):
     competitions.append([hackathon_names[i], institution_names[i], apply_links[i], date[i]])

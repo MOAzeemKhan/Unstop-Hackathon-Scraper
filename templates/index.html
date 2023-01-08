@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hackathon Extractor Bot</title>
+    <link rel="stylesheet" type="text/css" href="\static\css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Hackathon Extractor Bot</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <main>
+      <h2>Welcome to the Hackathon Extractor Bot</h2>
+      <p>
+        This bot helps you find and track hackathons happening around the world.
+        Simply enter the URL of the webpage you want to scrape and the bot will
+        extract all the relevant information for you.
+      </p>
+      <form action="/scrape" method="POST">
+        <label for="url">Enter URL:</label><br>
+        <input type="text" id="url" name="url"><br>
+        <input type="submit" value="Submit">
+
+      </form>
+      <div id="results">
+        <!-- Results from the hackathon extractor bot will be displayed here -->
+      </div>
+    </main>
+    <footer>
+      <p>Copyright 2023 Hackathon Extractor Bot</p>
+    </footer>
+  </body>
+</html>
