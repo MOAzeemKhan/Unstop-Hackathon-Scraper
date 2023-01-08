@@ -89,7 +89,7 @@ with open("competitions_deadline.csv", "w", newline="") as f:
   writer = csv.writer(f)
   writer.writerows(competitions)
 '''
-
+'''
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -97,10 +97,75 @@ from scrapy.http import TextResponse
 
 path_driver = 'C://chromedriver.exe'
 driver = webdriver.Chrome(executable_path=path_driver)
+driver.get('https://unstop.com/hackathons?filters=,all,open,all&types=teamsize,payment,oppstatus,eligible')
 registration_deadlines = []
-apply_links = 'https://unstop.com/hackathon/hack-pnw-hackpnw-568205'
-driver.get(apply_links)
-response = TextResponse(driver.current_url, body=driver.page_source, encoding='utf-8')
-deadline = response.xpath('//div[@class="ng-star-inserted"]/strong/text()').extract_first()
-registration_deadlines.append(deadline)
-print(registration_deadlines)
+links = driver.find_elements(By.CLASS_NAME, 'listing')
+apply_links = []
+
+# Iterate through the list of elements and extract the links
+for link in links:
+    temp_link = link.get_attribute('href')
+    apply_links.append(temp_link)
+
+for link in apply_links: #Working
+    driver.get(link)
+    response = TextResponse(driver.current_url, body=driver.page_source, encoding='utf-8')
+    deadline = response.xpath('//div[@class="ng-star-inserted"]/strong/text()').extract_first()
+    print(deadline)
+    registration_deadlines.append(deadline)
+print(registration_deadlines)'''
+
+# Import necessary libraries
+from selenium import webdriver
+from scrapy.selector import Selector
+import requests
+import time
+
+
+'''def get_deadline(link):
+  # Use selenium to access the link
+  driver = webdriver.Chrome()
+  driver.get(link)
+
+  # Use scrapy's Selector to parse the HTML and locate the element containing the deadline
+  html = driver.page_source
+  selector = Selector(text=html)
+  deadline_element = selector.css('.deadline-class-name')
+
+  # Extract the deadline from the element
+  deadline = deadline_element.extract()
+
+  # Close the browser
+  driver.close()
+
+  return deadline
+'''
+
+# Set up Selenium webdriver
+driver = webdriver.Chrome()
+
+# Navigate to the website
+driver.get("https://unstop.com/hackathons?filters=,all,open,all&types=teamsize,payment,oppstatus,eligible")
+
+# Wait for the page to load
+time.sleep(5)
+
+# Use Selenium to find all the hackathon links on the page
+hackathon_links = driver.find_elements(By.CLASS_NAME, 'listing')
+ls = []
+# Loop through each hackathon link
+for link in hackathon_links:
+  # Get the link for each hackathon
+  hackathon_url = link.get_attribute("href")
+  print(hackathon_url)
+
+  # Use Scrapy to scrape the registration deadline for each hackathon
+  response = Selector(text=requests.get(hackathon_url).text)
+  '''deadline = response.xpath("//span[@class='date ng-star-inserted']/text()").extract_first()'''
+  deadline = response.xpath("//span[contains(text(), 'Registration Deadline')]").get()
+  print(deadline)
+  ls.append(deadline)
+
+print(ls)
+# Close the webdriver
+driver.close()

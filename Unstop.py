@@ -80,31 +80,29 @@ institutions = driver.find_elements(By.XPATH, xpath_inst)
 # Create a list to store the institution names
 institution_names = [element.text for element in institutions]
 registration_deadlines = []
-'''
-apply_links = ['https://unstop.com/hackathon/hack-pnw-hackpnw-568205']
-for link in apply_links: #Working
-    driver.get(link)
-    response = TextResponse(driver.current_url, body=driver.page_source, encoding='utf-8')
-    deadline = response.xpath('//div[@class="ng-star-inserted"]/strong/text()').extract_first()
-    registration_deadlines.append(deadline)
-'''
+
 date = []
 time_left_elements = driver.find_elements(By.XPATH, './/strong[@class="ml-5"]')
 time_left = []
 
+count_time_left = 0
 for element in time_left_elements:
     time_left.append(element.text)
+    'count_time_left = count_time_left + 1'
 
+count_date = 0
 for i in range(1, len(time_left), 2):
     temp = time_left[i]
     print(temp)
     new_date = date_extractor(temp)
     date.append(new_date)
+    'count_date += 1'
 
+date.append('Not Found')
 print(len(apply_links), apply_links)
 print(len(hackathon_names), hackathon_names)
 print(institution_names)
-print(len(date), date)
+print(date)
 
 competitions = [["Hackathons", "Institutions", "Links", "Dates"]]
 for i in range(len(hackathon_names)):
@@ -112,18 +110,6 @@ for i in range(len(hackathon_names)):
 with open("competitions.csv", "w", newline="") as f:
   writer = csv.writer(f)
   writer.writerows(competitions)
-
-'''
-
-date = []
-
-for link in links:
-    temp_link = link.get_attribute('href')
-    driver.get(temp_link)
-    temp_date = driver.find_element(By.XPATH, '//strong[@class="ng-tns-c147-1"]')
-    date.append(temp_date)
-
-print(date)'''
 
 # close the browser
 driver.close()
