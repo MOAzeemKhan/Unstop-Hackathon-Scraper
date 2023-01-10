@@ -21,9 +21,11 @@ Usage:
 8. You can also customize the bot by modifying the scrape_website function in app.py. This function is responsible for extracting the data from the webpage.
 
 Contributions
+
 All contributions are welcome. Simply fork the repository and create a pull request with your changes.
 
 License
+https://github.com/MOAzeemKhan/Unstop-Hackathon-Scraper/blob/acb74cf5f5b7666d5bead48fe3d35f29c583ce60/LICENSE.md
 
 If you have any questions or issues, please feel free to open an issue on this repository.
 
